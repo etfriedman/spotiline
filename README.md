@@ -6,14 +6,14 @@
 ![Alt Text](https://i.imgur.com/y4bJpdj.gif)
 ----
 ## Dependencies:
-1. viu (lookup viu install)
+1. viu (https://github.com/atanunq/viu) (You need to have a rust env. on your computer, very easy to do)
 2. requests
 3. spotipy
 ----
 ## Setup/Install:
 ![Alt Text](https://github.com/etfriedman/command-line-spotify-player/blob/master/setup1.gif)
->pip install spotipy
->pip install requests
+1. pip install spotipy
+2. pip install requests
 
 
 
