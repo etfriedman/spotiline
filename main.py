@@ -18,17 +18,6 @@ def clear():
     os.system('clear') # clear terminal each time we run
 clear()
 
-# TODO:
-# PROGRESS BAR SHOWING THE POPULARITY OF THE SONG!!!!! IT IS x/100 !!!!
-
-#export SPOTIPY_CLIENT_ID='your-spotify-client-id
-#export SPOTIPY_CLIENT_SECRET='your-spotify-client-secret'
-#export SPOTIPY_REDIRECT_URI='your-app-redirect-url'
-#
-#
-# If you get an error regard NonType, make sure you are playing a song!!!! otherwise spotify drops your "currently playing" and we cant access it!
-#if you are getting a cres error (export=blahlbahlblah), run the lines in the creds.txt file 1 by 1 (make sure you have replced each item to your own)
-
 if len(sys.argv) > 1: # make sure something was inputted
     username = sys.argv[1] # set username to what user inputs in command line
 else: #if nothing was inputted
@@ -41,9 +30,9 @@ else: #if nothing was inputted
 coverArt = "cover.jpg"
 
 def showAscii():
-    subprocess.run(["viu",coverArt , "-w", "50", "-h", "25"])
+    subprocess.run(["viu",coverArt , "-w", "80", "-h", "40"])
 
-
+# From stackoverflow - Allows me to easily add color and attributes to text
 class color:
    PURPLE = '\033[95m'
    CYAN = '\033[96m'
@@ -56,9 +45,6 @@ class color:
    UNDERLINE = '\033[4m'
    END = '\033[0m'
 
-hasdownloaded = 0
-shownCover = 0
-
 
 def update(username):
 
@@ -67,10 +53,11 @@ def update(username):
     #they paste the URL in command line, which allows the app to access specific info about spotify account
     token = util.prompt_for_user_token(username,scope)
 
-
+    #if token works, get data!
     if token:
         sp = spotipy.Spotify(auth=token)
         current_track = sp.current_user_playing_track()
+        #otherwise, doesn't work
     else:
         print("Wasn't able to get token for", username)
 
