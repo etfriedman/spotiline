@@ -1,6 +1,5 @@
 # Spotiline - Spotify preview from the linux command line!
 
-----
 ## What does it do?
 
 ![Alt Text](https://i.imgur.com/y4bJpdj.gif)
