@@ -11,12 +11,16 @@
 3. spotipy
 ----
 ## Setup/Install:
-![Alt Text](https://github.com/etfriedman/command-line-spotify-player/blob/master/setup.gif)
-    pip install spotipy
-    pip install requests
+![Alt Text](https://github.com/etfriedman/command-line-spotify-player/blob/master/setup1.gif)
+>pip install spotipy
+>pip install requests
 
 
 
 ## Common Errors:
-If you get an error regard NonType, make sure you are playing a song!!!! otherwise spotify drops your "currently playing" and we cant access it!
-if you are getting a creds error (export=blahlbahlblah), run the lines in the creds.txt file 1 by 1 (make sure you have replced each item to your own)
+- If you get an error regard NonType, make sure you are playing a song! (otherwise spotify drops your "currently playing" and you cant access it!)
+- If you are getting a creds error (export=blahlbahlblah), run the lines in the creds.txt file 1 by 1 in terminal (make sure you have replced each item to your own)
+if you don't know where to get those, follow this: https://developer.spotify.com/
+Make a new account, and makea new app.
+Check your dashboard and click on that app, get the creds there.
+If you need more help, lookup "Make spotify app"
