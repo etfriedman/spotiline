@@ -16,6 +16,11 @@
 ## Setup/Install:
 1. pip install spotipy
 2. pip install requests
+3. git clone https://github.com/etfriedman/spotiline/
+4. cd spotiline
+5. Follow tutorial below to get your credentials 
+6. python main.py you-spotify-username
+7: Follow this gif when promted to enter link:
 ![Alt Text](https://github.com/etfriedman/command-line-spotify-player/blob/master/setup1.gif)
 
 ## Common Errors:
