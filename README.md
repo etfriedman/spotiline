@@ -1,4 +1,4 @@
-# Spotiline - Spotify preview from the linux command line!
+# Spotiline - Spotify preview for the UNIX command line
 
 ## What does it do?
 
