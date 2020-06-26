@@ -11,6 +11,9 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import time
 import sys
 import os
+import curses
+from convertoascii import showAscii
+
 def clear():
     os.system('clear') # clear terminal each time we run
 clear()
@@ -18,7 +21,13 @@ clear()
 # TODO:
 # PROGRESS BAR SHOWING THE POPULARITY OF THE SONG!!!!! IT IS x/100 !!!!
 
-
+#export SPOTIPY_CLIENT_ID='your-spotify-client-id
+#export SPOTIPY_CLIENT_SECRET='your-spotify-client-secret'
+#export SPOTIPY_REDIRECT_URI='your-app-redirect-url'
+#
+#
+# If you get an error regard NonType, make sure you are playing a song!!!! otherwise spotify drops your "currently playing" and we cant access it!
+#if you are getting a cres error (export=blahlbahlblah), run the lines in the creds.txt file 1 by 1 (make sure you have replced each item to your own)
 
 if len(sys.argv) > 1: # make sure something was inputted
     username = sys.argv[1] # set username to what user inputs in command line
@@ -26,16 +35,22 @@ else: #if nothing was inputted
     print("Please include your username. Usage: file.py username") # puts the name of the file before username, so userse see: Useage FILENAME username. (really cool)
     sys.exit() #exits run
 
+shownCover = 0
+if shownCover == 0:
+    showAscii()
+    shownCover + 1
+
+
 # Fun Code starts!
 # --------------------------------------
 def update(username):
+
+    # token = util.prompt_for_user_token(username,scope)
     scope = 'user-read-playback-state'
     #Prompts user to agree to let app access spotify, redirects them to ethan.software with a special url
     #they paste the URL in command line, which allows the app to access specific info about spotify account
-    token = util.prompt_for_user_token(username, scope,
-    client_id='f63792f34788490ab0be9e3c6758c0e1', # set these manually, (maybe?)
-    client_secret='49a37f9ee22749138d2a989aeb79e8af',
-    redirect_uri='https://ethan.software')
+    token = util.prompt_for_user_token(username,scope)
+
 
     if token:
         sp = spotipy.Spotify(auth=token)
@@ -61,40 +76,28 @@ def update(username):
         track_length_p = str(int(track_length)) + ':' + str(int(track_length_sec))#Combines the full seconds and the after decimal seconds
         track_progress_p = str(int(track_progress)) + ':' + str(int(track_progress_sec))
 
-        print("Currently Playing: ",track_name, "By: ",track_author)
-        print(track_length_p)
-        #print(track_progress_p)
+        track_album_cover = current_track['item']['album']['images'][2]['url']
+        print(track_album_cover)
+        print("Currently Playing:",track_name, "By: ",track_author, "Length:",track_length_p, "Progress:",track_progress_p, end='\r')
+        # print("Length:",track_length_p)
+        # print("Progress:",track_progress_p)
 
-        return track_length, track_progress
+        return track_length, track_progress, track_album_cover
 
-    track_length, track_progress = info(current_track)
-    return track_length, track_progress
 
-#def getAlbumCover():
-    # track_album_cover = current_track['item']['album']['images'][0]['url']
-    # print(track_album_cover)
+    track_length, track_progress, track_album_cover = info(current_track)
+    return track_length, track_progress, track_album_cover
+
+#when downloading the cover art, figure out how to replace it with what is being used.
 
 # Goal, only need to do 1 call per song!! #Back up is to make a call every second, which I assume would be fine, but I want to work around that easy solution
 # Goal seems tough, gonna do 1 call a second. While this is inneficient, im going to see what I can do about changing the time
 while True:
-    track_length, track_progress = update(username)
-    pausetime = round(((track_length*60)-(track_progress*60)),3)
-    custom_progress_start = int(pausetime)
-    while int(pausetime) - 1 != 0: # takes the number of seconds in the song, and checks if we are 1 second away from the end,
-        custom_track_progress = (custom_progress_start/60)
-        #print("custom track progress= ", custom_track_progress) # testing
-        custom_track_progress_sec = (custom_track_progress % 1)*60
-        #print("custom track progress seconds = ", custom_track_progress_sec) # testing
-        custom_progress_pp = str(int(custom_track_progress)) + ':' + str(int(custom_track_progress_sec))
-        #clear()
-        for i in range(int(custom_track_progress)):
-            custom_track_progress_sec - 1
-        time.sleep(1)
-        update(username)
-        print("Time Left:", custom_progress_pp)
+    #clear()
+    update(username)
+    time.sleep(1)
 
 
-    print("Next Song Playing!")
 
 
 
