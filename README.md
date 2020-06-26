@@ -9,9 +9,11 @@
 1. viu (lookup viu install)
 2. requests
 3. spotipy
-  
-    pip install spotipy
 ----
+## Setup/Install:
+![Alt Text](https://media1.giphy.com/media/MFJFeeZgydmm13SYDE/giphy.gif)
+    pip install spotipy
+    pip install requests
 
 
 
