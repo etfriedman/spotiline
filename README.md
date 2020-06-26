@@ -4,6 +4,9 @@
 ## What does it do?
 
 ![Alt Text](https://i.imgur.com/y4bJpdj.gif)
+1. shows current album cover (does not switch covers, that is WIP)
+2. Shows Title, Author of song.
+3. Live progress through song, song length.
 ----
 ## Dependencies:
 1. viu (https://github.com/atanunq/viu) (You need to have a rust env. on your computer, very easy to do)
