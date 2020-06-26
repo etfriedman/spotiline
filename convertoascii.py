@@ -1,6 +1,6 @@
 import os
 
 def showAscii():
-    os.system("img2txt.py cover1.jpg --color --ansi --targetAspect=0.5")
+    os.system("viu cover1.jpg -w 20 -h 10")
 
 showAscii()

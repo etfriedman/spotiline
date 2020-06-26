@@ -1,24 +1,10 @@
+from progress.bar import ChargingBar
 import time
-import curses
 
-
-stdscr = curses.initscr()
-
-curses.noecho()
-curses.cbreak()
-stdscr.keypad(True)
-curses.curs_set(0)
-
-stdscr.addstr(5, 10, "Hello, world!")
-
-stdscr.refresh()
-
-time.sleep(3)
-
-stdscr.clear()
-
-curses.nocbreak()
-stdscr.keypad(False)
-curses.echo()
-
-curses.endwin()
+lengthofsong = 100
+bar = FillingSquaresBar('progress |', suffix='| songlength', max = lengthofsong)
+for i in range(lengthofsong):
+    time.sleep(0.1)
+    # Do some work
+    bar.next()
+bar.finish()

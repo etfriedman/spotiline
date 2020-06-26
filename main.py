@@ -11,8 +11,9 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import time
 import sys
 import os
-import curses
 from convertoascii import showAscii
+import subprocess
+#from progress.bar import ChargingBar
 
 def clear():
     os.system('clear') # clear terminal each time we run
@@ -35,14 +36,36 @@ else: #if nothing was inputted
     print("Please include your username. Usage: file.py username") # puts the name of the file before username, so userse see: Useage FILENAME username. (really cool)
     sys.exit() #exits run
 
+# Fun Code starts!
+# --------------------------------------
+
+coverArt = "cover2.jpg"
+
+def showAscii():
+    subprocess.run(["viu",coverArt , "-w", "20", "-h", "10"])
+
+
+
 shownCover = 0
 if shownCover == 0:
     showAscii()
     shownCover + 1
 
+class color:
+   PURPLE = '\033[95m'
+   CYAN = '\033[96m'
+   DARKCYAN = '\033[36m'
+   BLUE = '\033[94m'
+   GREEN = '\033[92m'
+   YELLOW = '\033[93m'
+   RED = '\033[91m'
+   BOLD = '\033[1m'
+   UNDERLINE = '\033[4m'
+   END = '\033[0m'
 
-# Fun Code starts!
-# --------------------------------------
+
+
+
 def update(username):
 
     # token = util.prompt_for_user_token(username,scope)
@@ -77,16 +100,16 @@ def update(username):
         track_progress_p = str(int(track_progress)) + ':' + str(int(track_progress_sec))
 
         track_album_cover = current_track['item']['album']['images'][2]['url']
-        print(track_album_cover)
-        print("Currently Playing:",track_name, "By: ",track_author, "Length:",track_length_p, "Progress:",track_progress_p, end='\r')
+        #print(track_album_cover)
+        print("▶ ",color.BOLD + track_progress_p + color.END, '-' , color.BOLD + track_length_p + color.END,color.BOLD + color.PURPLE + track_name + color.END, "-",track_author,"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀", end='\r')
         # print("Length:",track_length_p)
         # print("Progress:",track_progress_p)
 
-        return track_length, track_progress, track_album_cover
+        return track_length, track_progress, track_album_cover, track_progress_p, track_length_p, track_name
 
 
-    track_length, track_progress, track_album_cover = info(current_track)
-    return track_length, track_progress, track_album_cover
+    track_length, track_progress, track_album_cover, track_progress_p, track_length_p, track_name = info(current_track)
+    return track_length, track_progress, track_album_cover,track_progress_p, track_length_p, track_name
 
 #when downloading the cover art, figure out how to replace it with what is being used.
 
@@ -94,8 +117,16 @@ def update(username):
 # Goal seems tough, gonna do 1 call a second. While this is inneficient, im going to see what I can do about changing the time
 while True:
     #clear()
-    update(username)
+    track_length, track_progress, track_album_cover,track_progress_p, track_length_p, track_name = update(username)
+    #track_name_1 = track_name
+    #bar = ChargingBar(track_progress_p,fill='#' ,suffix=track_length_p, max = track_length*60)
     time.sleep(1)
+    #bar.next()
+    #track_name_2 = track_name
+    #if track_name_1 != track_name_2:
+        #bar.finish()
+
+
 
 
 
