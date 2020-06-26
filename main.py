@@ -3,7 +3,7 @@
 # ============================================================================
 
 #imports
-# import requests # allows us to make requests to websites
+import requests # allows us to make requests to websites
 # import re # regex (regular expressions)
 import spotipy
 import spotipy.util as util
@@ -11,7 +11,6 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import time
 import sys
 import os
-from convertoascii import showAscii
 import subprocess
 #from progress.bar import ChargingBar
 
@@ -39,17 +38,11 @@ else: #if nothing was inputted
 # Fun Code starts!
 # --------------------------------------
 
-coverArt = "cover2.jpg"
+coverArt = "cover.jpg"
 
 def showAscii():
-    subprocess.run(["viu",coverArt , "-w", "20", "-h", "10"])
+    subprocess.run(["viu",coverArt , "-w", "50", "-h", "25"])
 
-
-
-shownCover = 0
-if shownCover == 0:
-    showAscii()
-    shownCover + 1
 
 class color:
    PURPLE = '\033[95m'
@@ -63,12 +56,12 @@ class color:
    UNDERLINE = '\033[4m'
    END = '\033[0m'
 
-
+hasdownloaded = 0
+shownCover = 0
 
 
 def update(username):
 
-    # token = util.prompt_for_user_token(username,scope)
     scope = 'user-read-playback-state'
     #Prompts user to agree to let app access spotify, redirects them to ethan.software with a special url
     #they paste the URL in command line, which allows the app to access specific info about spotify account
@@ -81,7 +74,7 @@ def update(username):
     else:
         print("Wasn't able to get token for", username)
 
-    def info(current_track):
+    def info(current_track,shouldprint):
         track_length = round((((current_track['item']['duration_ms'])/1000)/60),3) # these put the time into seconds, where 1 = 60 seconds
         track_progress = round((((current_track['progress_ms'])/1000)/60),3)
         # Go through the dictionary that is returned, get the current tracks name
@@ -101,30 +94,39 @@ def update(username):
 
         track_album_cover = current_track['item']['album']['images'][2]['url']
         #print(track_album_cover)
-        print("▶ ",color.BOLD + track_progress_p + color.END, '-' , color.BOLD + track_length_p + color.END,color.BOLD + color.PURPLE + track_name + color.END, "-",track_author,"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀", end='\r')
+        if shouldprint:
+            print("  ▶ ",color.BOLD + track_progress_p + color.END, '-' , color.BOLD + track_length_p + color.END,'|',color.BOLD + color.PURPLE + track_name + color.END, "-",track_author,"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀", end='\r')
         # print("Length:",track_length_p)
         # print("Progress:",track_progress_p)
 
         return track_length, track_progress, track_album_cover, track_progress_p, track_length_p, track_name
 
 
-    track_length, track_progress, track_album_cover, track_progress_p, track_length_p, track_name = info(current_track)
+    #show album cover
+
+    track_length, track_progress, track_album_cover, track_progress_p, track_length_p, track_name = info(current_track,True)
     return track_length, track_progress, track_album_cover,track_progress_p, track_length_p, track_name
+
+#get the album / track cover
+def get_albumcover():
+    track_album_cover = update(username)
+    url = track_album_cover[2]
+    r = requests.get(url)
+    open('cover.jpg', 'wb').write(r.content)
+
+get_albumcover()
+showAscii()
+
 
 #when downloading the cover art, figure out how to replace it with what is being used.
 
 # Goal, only need to do 1 call per song!! #Back up is to make a call every second, which I assume would be fine, but I want to work around that easy solution
 # Goal seems tough, gonna do 1 call a second. While this is inneficient, im going to see what I can do about changing the time
 while True:
-    #clear()
-    track_length, track_progress, track_album_cover,track_progress_p, track_length_p, track_name = update(username)
-    #track_name_1 = track_name
-    #bar = ChargingBar(track_progress_p,fill='#' ,suffix=track_length_p, max = track_length*60)
+    update(username)
     time.sleep(1)
-    #bar.next()
-    #track_name_2 = track_name
-    #if track_name_1 != track_name_2:
-        #bar.finish()
+
+
 
 
 
