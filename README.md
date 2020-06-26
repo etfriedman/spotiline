@@ -4,7 +4,7 @@
 ## What does it do?
 
 ![Alt Text](https://i.imgur.com/y4bJpdj.gif)
-1. shows current album cover (does not switch covers, that is WIP)
+1. Shows current album cover (does not switch covers, that is WIP)
 2. Shows Title, Author of song.
 3. Live progress through song, song length.
 ----
@@ -14,11 +14,9 @@
 3. spotipy
 ----
 ## Setup/Install:
-![Alt Text](https://github.com/etfriedman/command-line-spotify-player/blob/master/setup1.gif)
 1. pip install spotipy
 2. pip install requests
-
-
+![Alt Text](https://github.com/etfriedman/command-line-spotify-player/blob/master/setup1.gif)
 
 ## Common Errors:
 - If you get an error regard NonType, make sure you are playing a song! (otherwise spotify drops your "currently playing" and you cant access it!)
