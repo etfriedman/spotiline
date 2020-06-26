@@ -11,7 +11,7 @@
 3. spotipy
 ----
 ## Setup/Install:
-![Alt Text](https://media1.giphy.com/media/MFJFeeZgydmm13SYDE/giphy.gif)
+![Alt Text](https://github.com/etfriedman/command-line-spotify-player/blob/master/setup.gif)
     pip install spotipy
     pip install requests
 
